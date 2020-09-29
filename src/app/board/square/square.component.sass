@@ -1,0 +1,29 @@
+div.square
+  display: inline-block
+  flex-direction: row
+  width: 1rem
+  height: 1rem
+  box-shadow: black
+  border: 1px solid black
+  &.black
+    background: #333333ff
+  &.white
+    background: white
+  &.chip::after
+    content: ''
+    height: .9rem
+    width: .9rem
+    background-color: #bbb
+    border-radius: 50%
+    display: inline-block
+    transform: translate(1px, -2.3px)
+  &.chip.isFirstPlayer::after
+    background-color: lighten(#1d3557, 20%)
+  &.chip.isSecondPlayer::after
+    background-color: lighten(#457b9d, 20%)
+  &.chip.isThirdPlayer::after
+    background-color: #a8dadc
+  &.chip.isFourthPlayer::after
+    background-color: #e63946
+  &.chip:hover::after
+    background-color: darkblue

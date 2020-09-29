@@ -1,0 +1,13 @@
+<div class="square"
+     matTooltip="id:{{square.chip?.id}}, x:{{square.position.x}}, y:{{square.position.y}}"
+     (click)="click()"
+     [ngClass]="{
+       'black': isBlack,
+       'white': isWhite,
+       'chip': hasChip,
+       'clicked': clicked,
+       'isFirstPlayer': isFirstPlayer,
+       'isSecondPlayer': isSecondPlayer,
+       'isThirdPlayer': isThirdPlayer,
+       'isFourthPlayer': isFourthPlayer
+     }"></div>
