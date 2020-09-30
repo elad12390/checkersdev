@@ -26,7 +26,7 @@ export interface IAuthRes {
 }
 
 export interface IBoard {
-  squres: ISqure[][];
+  squres: ISqure[];
 }
 
 export interface IPosition {
@@ -94,6 +94,7 @@ export class CheckersService {
     refreshToken: string;
   };
   public playerIndex: number;
+  serverUrl: string = environment.serverUrl;
   constructor(private httpClient: HttpClient) { }
   public connectToGame(gameId: string, playerId: string): Observable<IAuthRes> {
     return this.post<IAuthRes>('Game/Connect', {gameId, playerId}).pipe(

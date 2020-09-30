@@ -13,6 +13,7 @@ import { BoardComponent } from './board/board.component';
 import { SquareComponent } from './board/square/square.component';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [
@@ -20,17 +21,18 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     BoardComponent,
     SquareComponent
   ],
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    MatInputModule,
-    MatFormFieldModule,
-    MatSnackBarModule,
-    ReactiveFormsModule,
-    BrowserAnimationsModule,
-    MatButtonModule,
-    MatTooltipModule
-  ],
+    imports: [
+        BrowserModule,
+        HttpClientModule,
+        MatInputModule,
+        MatFormFieldModule,
+        MatSnackBarModule,
+        ReactiveFormsModule,
+        BrowserAnimationsModule,
+        MatButtonModule,
+        MatTooltipModule,
+        MatCheckboxModule
+    ],
   providers: [
     HttpClientModule,
     { provide: HTTP_INTERCEPTORS, useClass: ClientHttpInterceptor, multi: true}

@@ -3,14 +3,16 @@ import {
   HttpRequest,
   HttpHandler,
   HttpEvent,
-  HttpInterceptor, HttpHeaders
+  HttpInterceptor, HttpHeaders, HttpErrorResponse
 } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import {EMPTY, Observable} from 'rxjs';
 import {environment} from '../../environments/environment';
 import {CheckersService} from './checkers.service';
+import {catchError} from 'rxjs/operators';
+import {MatSnackBar} from '@angular/material/snack-bar';
 @Injectable()
 export class ClientHttpInterceptor implements HttpInterceptor {
-  constructor(private checkers: CheckersService) {}
+  constructor(private checkers: CheckersService, private snackbar: MatSnackBar) {}
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     let headers = request.headers;
     if (this.checkers.connectionHeaders) {
@@ -18,7 +20,12 @@ export class ClientHttpInterceptor implements HttpInterceptor {
         headers = headers.append(key, val);
       }
     }
-    const req = request.clone({ url: environment.serverUrl + '/' + request.url, headers });
-    return next.handle(req);
+    const req = request.clone({ url: this.checkers.serverUrl + '/' + request.url, headers });
+    return next.handle(req).pipe(
+      catchError((err: HttpErrorResponse) => {
+        this.snackbar.open(err.message, '', {duration: 1000, horizontalPosition: 'center', verticalPosition: 'top'});
+        return EMPTY;
+      })
+    );
   }
 }

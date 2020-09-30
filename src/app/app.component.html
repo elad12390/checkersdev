@@ -4,13 +4,12 @@
     <input matInput [formControl]="gameFormControl" placeholder="Game_Demo_#">
   </mat-form-field>
 
-<!--  <mat-form-field class="example-full-width">-->
-<!--    <mat-label>Player</mat-label>-->
-<!--    <input matInput [formControl]="playerFormControl" placeholder="Player_Demo_#">-->
-<!--  </mat-form-field>-->
-
+  <mat-form-field class="example-full-width">
+    <mat-label>ServerUrl</mat-label>
+    <input matInput [formControl]="serverUrl" placeholder="www.xxx...">
+  </mat-form-field>
+  <mat-checkbox [formControl]="localServerFormControl">Local Server</mat-checkbox>
   <button mat-raised-button (click)="connectToGame()">Connect</button>
-  <button mat-raised-button (click)="getState()">State</button>
   <button mat-raised-button (click)="nextPlayer()">Next player</button>
   <button mat-raised-button (click)="refreshView()">Refresh</button>
   <div>Client player: Player_Demo_{{playeridx}}</div>
