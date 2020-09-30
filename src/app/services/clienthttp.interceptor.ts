@@ -3,10 +3,10 @@ import {
   HttpRequest,
   HttpHandler,
   HttpEvent,
-  HttpInterceptor, HttpHeaders, HttpErrorResponse
+  HttpInterceptor,
+  HttpErrorResponse
 } from '@angular/common/http';
 import {EMPTY, Observable} from 'rxjs';
-import {environment} from '../../environments/environment';
 import {CheckersService} from './checkers.service';
 import {catchError} from 'rxjs/operators';
 import {MatSnackBar} from '@angular/material/snack-bar';
