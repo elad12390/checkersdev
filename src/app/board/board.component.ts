@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ISelectedChipEvent} from './square/square.component';
-import {CheckersService, ISqure} from '../services/checkers.service';
+import {CheckersService, Isquare} from '../services/checkers.service';
 import {$e} from 'codelyzer/angular/styles/chars';
 import {MatSnackBar} from '@angular/material/snack-bar';
 export enum GAME_STATE {
@@ -13,7 +13,7 @@ export enum GAME_STATE {
   styleUrls: ['./board.component.sass']
 })
 export class BoardComponent implements OnInit {
-  @Input() board: ISqure[][];
+  @Input() board: Isquare[][];
   @Input() currentPlayerIndex: number;
   @Input() playerIndex: number;
   @Output() refresh: EventEmitter<boolean> = new EventEmitter<boolean>();

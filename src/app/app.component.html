@@ -15,5 +15,5 @@
   <div>Client player: Player_Demo_{{playeridx}}</div>
   <div>Player index: {{server.playerIndex}}</div>
   <div>Current index: {{state?.currentPlayerIndex}}</div>
-  <app-board *ngIf="state" [board]="state.board.squres" (refresh)="playedMove()" [currentPlayerIndex]="state.currentPlayerIndex" [playerIndex]="playeridx"></app-board>
+  <app-board *ngIf="state" [board]="state.board.squares" (refresh)="playedMove()" [currentPlayerIndex]="state.currentPlayerIndex" [playerIndex]="playeridx"></app-board>
 </div>

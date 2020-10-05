@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {ISqure} from '../../services/checkers.service';
+import {Isquare} from '../../services/checkers.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
 
 export interface ISelectedChipEvent {
@@ -20,7 +20,7 @@ export class SquareComponent implements OnInit {
   @Input() Y: number;
   @Input() X: number;
   @Input() playerIdx: number;
-  @Input() square: ISqure;
+  @Input() square: Isquare;
   @Output() selected: EventEmitter<ISelectedChipEvent> = new EventEmitter<ISelectedChipEvent>();
   isWhite: boolean;
   isBlack: boolean;

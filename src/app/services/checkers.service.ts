@@ -26,7 +26,7 @@ export interface IAuthRes {
 }
 
 export interface IBoard {
-  squres: ISqure[];
+  squares: Isquare[];
 }
 
 export interface IPosition {
@@ -41,7 +41,7 @@ export interface IShortPosition {
   y: number;
 }
 
-export interface ISqure {
+export interface Isquare {
   isValid: boolean;
   isEmpty: boolean;
   position: IPosition;
@@ -55,7 +55,7 @@ export interface IChip {
   value: number;
   isCaptured: boolean;
   isBounty: boolean;
-  squre: ISqure;
+  square: Isquare;
   player: IPlayer;
 }
 

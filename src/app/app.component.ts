@@ -42,7 +42,7 @@ export class AppComponent implements OnInit{
         tap((res) => {
           this.state = res;
           const arr = [...new Array(14)].map(() => [...new Array(14)]);
-          this.state.board.squres.map((item) => {
+          this.state.board.squares.map((item) => {
             if (item.chip) {
               const player = this.state.players.find(pl => !!(Object.values(pl.chips).find((chip) => chip.id === item.chip.id)));
               arr[14 - item.position.y][item.position.x - 1] = {
@@ -53,7 +53,7 @@ export class AppComponent implements OnInit{
               arr[14 - item.position.y][item.position.x - 1] = item;
             }
           });
-          this.state.board.squres = arr as [];
+          this.state.board.squares = arr as [];
         })
       ))
     ).subscribe();
