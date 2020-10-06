@@ -81,6 +81,10 @@ export interface IState {
   moneyPot: number;
 }
 
+export interface IVersion {
+  version: number;
+}
+
 export interface IMoveRequest {
   chipId: number;
   nextPositions: IShortPosition[];
@@ -89,6 +93,7 @@ export interface IMoveRequest {
   providedIn: 'root'
 })
 export class CheckersService {
+  public static currentVersion = 0;
   public connectionHeaders: {
     authorization: string;
     refreshToken: string;
@@ -110,6 +115,10 @@ export class CheckersService {
 
   public move(move: IMoveRequest): Observable<IState> {
     return this.post<IState>('Game/Move', move);
+  }
+
+  public version(): Observable<IVersion> {
+    return this.get<IVersion>('Game/Version');
   }
 
   public state(): Observable<IState> {

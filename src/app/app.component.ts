@@ -1,9 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {CheckersService, IState} from './services/checkers.service';
 import {FormControl} from '@angular/forms';
-import {switchMap, tap} from 'rxjs/operators';
+import {map, switchMap, tap, timeInterval} from 'rxjs/operators';
 import {MatCheckboxChange} from '@angular/material/checkbox';
 import {environment} from '../environments/environment';
+import {EMPTY, interval, Observable, of} from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -33,11 +34,26 @@ export class AppComponent implements OnInit{
   }
 
   public connectToGame(): void {
-    this.server.connectToGame(this.gameFormControl.value, 'Player_Demo_' + this.playeridx).subscribe((res) => console.log(res));
+    this.server.connectToGame(this.gameFormControl.value, 'Player_Demo_' + this.playeridx)
+      .pipe(
+        switchMap(() => interval(1000).pipe(
+          switchMap(() => this.server.version()),
+          map((obj) => obj.version),
+          switchMap((version) => {
+            if (CheckersService.currentVersion !== version ) {
+              CheckersService.currentVersion = version;
+              return this.refreshViewObservable();
+            } else {
+              return EMPTY;
+            }
+          })
+        ))
+      )
+      .subscribe((res) => console.log(res));
   }
 
-  public refreshView(): void {
-    this.server.connectToGame(this.gameFormControl.value, 'Player_Demo_' + this.playeridx).pipe(
+  public refreshViewObservable(): Observable<any> {
+    return this.server.connectToGame(this.gameFormControl.value, 'Player_Demo_' + this.playeridx).pipe(
       switchMap(() => this.server.state().pipe(
         tap((res) => {
           this.state = res;
@@ -56,7 +72,10 @@ export class AppComponent implements OnInit{
           this.state.board.squares = arr as [];
         })
       ))
-    ).subscribe();
+    );
+  }
+  public refreshView(): void {
+    this.refreshViewObservable().subscribe();
   }
 
   public nextPlayer(): void {
