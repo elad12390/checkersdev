@@ -40,13 +40,10 @@ export class SquareComponent implements OnInit {
     this.isSecondPlayer = this.square.playerId === 1;
     this.isThirdPlayer = this.square.playerId === 2;
     this.isFourthPlayer = this.square.playerId === 3;
-    console.log(this.isFirstPlayer);
   }
 
   public click(): void {
-    console.log(this.square.position, {x: this.X,y: this.Y});
     this.clicked = !this.clicked;
-    console.log(this.square);
     this.selected.emit({
       hasChip: this.hasChip,
       id: this.hasChip ? this.square.chip.id : null,
