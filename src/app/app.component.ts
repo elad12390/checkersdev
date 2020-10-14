@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {CheckersService, IState} from './services/checkers.service';
+import {CheckersService, IState, IVersion} from './services/checkers.service';
 import {FormControl} from '@angular/forms';
 import {map, switchMap, tap, timeInterval} from 'rxjs/operators';
 import {MatCheckboxChange} from '@angular/material/checkbox';
@@ -12,7 +12,8 @@ import {EMPTY, interval, Observable, of} from 'rxjs';
   styleUrls: ['./app.component.sass']
 })
 export class AppComponent implements OnInit{
-  private checked: boolean = true;
+  private checked = true;
+  public version: IVersion;
   constructor(public server: CheckersService) {
   }
   title = 'checkers-client';
@@ -38,8 +39,10 @@ export class AppComponent implements OnInit{
       .pipe(
         switchMap(() => interval(1000).pipe(
           switchMap(() => this.server.version()),
-          map((obj) => obj.version),
-          switchMap((version) => {
+          map((obj) => obj),
+          switchMap((versionObj: IVersion) => {
+            this.version = versionObj;
+            const version = versionObj.version;
             if (CheckersService.currentVersion !== version ) {
               CheckersService.currentVersion = version;
               return this.refreshViewObservable();

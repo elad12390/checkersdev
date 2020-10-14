@@ -13,7 +13,7 @@ export enum GAME_STATE {
   styleUrls: ['./board.component.sass']
 })
 export class BoardComponent implements OnInit {
-  @Input() board: Isquare[][];
+  @Input() board: Isquare[];
   @Input() currentPlayerIndex: number;
   @Input() playerIndex: number;
   @Output() refresh: EventEmitter<boolean> = new EventEmitter<boolean>();

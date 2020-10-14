@@ -13,6 +13,7 @@
   <button mat-raised-button (click)="nextPlayer()">Next player</button>
   <button mat-raised-button (click)="refreshView()">Refresh</button>
   <div>Client player: Player_Demo_{{playeridx}}</div>
+  <div>Time {{version?.turnClock}}</div>
   <div>Player index: {{server.playerIndex}}</div>
   <div>Current index: {{state?.currentPlayerIndex}}</div>
   <app-board *ngIf="state" [board]="state.board.squares" (refresh)="playedMove()" [currentPlayerIndex]="state.currentPlayerIndex" [playerIndex]="playeridx"></app-board>

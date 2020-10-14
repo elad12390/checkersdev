@@ -83,6 +83,8 @@ export interface IState {
 
 export interface IVersion {
   version: number;
+  turnClock: Time;
+  gameClock: Time;
 }
 
 export interface IMoveRequest {
