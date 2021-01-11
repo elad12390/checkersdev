@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import {from, Observable, of} from 'rxjs';
 import {environment} from '../../environments/environment';
 import {map, tap} from 'rxjs/operators';
 import {ClientHttpInterceptor} from './clienthttp.interceptor';
@@ -123,8 +123,8 @@ export class CheckersService {
     return this.get<IVersion>('Game/Version');
   }
 
-  public state(): Observable<IState> {
-    return this.get<IState>('Game/State');
+  public state(stepNum): Observable<any> {
+    return of([])//states[stepNum])// this.get<IState>('Game/State');
   }
 
   public post<T>(url: string, body: any | null, options?: {

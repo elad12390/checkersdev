@@ -1,20 +1,32 @@
 <div style="display: 'flex'; flex-direction: column;">
-  <mat-form-field class="example-full-width">
-    <mat-label>Game</mat-label>
-    <input matInput [formControl]="gameFormControl" placeholder="Game_Demo_#">
-  </mat-form-field>
+<!--  <mat-form-field class="example-full-width">-->
+<!--    <mat-label>Game</mat-label>-->
+<!--    <input matInput [formControl]="gameFormControl" placeholder="Game_Demo_#">-->
+<!--  </mat-form-field>-->
 
-  <mat-form-field class="example-full-width">
-    <mat-label>ServerUrl</mat-label>
-    <input matInput [formControl]="serverUrl" placeholder="www.xxx...">
+<!--  <mat-form-field class="example-full-width">-->
+<!--    <mat-label>ServerUrl</mat-label>-->
+<!--    <input matInput [formControl]="serverUrl" placeholder="www.xxx...">-->
+<!--  </mat-form-field>-->
+<!--  <mat-checkbox [formControl]="localServerFormControl">Local Server</mat-checkbox>-->
+  <mat-form-field>
+    <textarea placeholder="insert log here and scroll down" style="height:500px" type="text" matInput [formControl]="logFile"></textarea>
   </mat-form-field>
-  <mat-checkbox [formControl]="localServerFormControl">Local Server</mat-checkbox>
-  <button mat-raised-button (click)="connectToGame()">Connect</button>
-  <button mat-raised-button (click)="nextPlayer()">Next player</button>
-  <button mat-raised-button (click)="refreshView()">Refresh</button>
-  <div>Client player: Player_Demo_{{playeridx}}</div>
+<ng-container *ngIf="!!state">
+  <div>Client player: {{state?.currentPlayer?.nickname}}</div>
   <div>Time {{version?.turnClock}}</div>
   <div>Player index: {{server.playerIndex}}</div>
-  <div>Current index: {{state?.currentPlayerIndex}}</div>
+  <div>Current index: {{state?.currentplayerindex}}</div>
+<!--  <div>{{lastchanges[stepNum] | json}}</div>-->
+  <button mat-raised-button (click)="nextMove(false)">{{state.version}} Next Step</button>
+  <button mat-raised-button (click)="nextMove(true)">{{state.version}} Prev Step</button>
+  Playerid: {{state.laststatechange.playerid | json}}<br/>
+  chip: {{state.laststatechange.chipmoved?.chip | json}}<br/>
+  Old Position: {{state.laststatechange.chipmoved?.oldposition | json}}<br/>
+  NewPosition: {{state.laststatechange.chipmoved?.newposition | json}}<br/>
+  LastMove: {{state.laststatechange.chipmoved?.lastmove | json}}<br/>
+  removedChips: {{state.laststatechange.removedchips | json}}<br/>
   <app-board *ngIf="state" [board]="state.board.squares" (refresh)="playedMove()" [currentPlayerIndex]="state.currentPlayerIndex" [playerIndex]="playeridx"></app-board>
+
+</ng-container>
 </div>

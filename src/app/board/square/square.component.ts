@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Isquare} from '../../services/checkers.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import {keysToLowerCase} from '../../../assets/states';
 
 export interface ISelectedChipEvent {
   hasChip: boolean;
@@ -33,8 +34,8 @@ export class SquareComponent implements OnInit {
   constructor(private snackbar: MatSnackBar) { }
 
   ngOnInit(): void {
-    this.isWhite = !this.square.isValid;
-    this.isBlack = this.square.isValid;
+    this.isWhite = !this.square['isvalid'];
+    this.isBlack = this.square['isvalid'];
     this.hasChip = !!this.square.chip;
     this.isFirstPlayer = this.square.playerId === 0;
     this.isSecondPlayer = this.square.playerId === 1;
