@@ -12,11 +12,25 @@
   <mat-form-field>
     <textarea placeholder="insert log here and scroll down" style="height:500px" type="text" matInput [formControl]="logFile"></textarea>
   </mat-form-field>
+  <ng-container>
+    <mat-form-field>
+      <mat-select [formControl]="selectGame">
+        <ng-container *ngFor="let gameId of selectableGames">
+          <mat-option [value]="gameId">{{gameId}}</mat-option>
+        </ng-container>
+      </mat-select>
+    </mat-form-field>
+  </ng-container>
 <ng-container *ngIf="!!state">
-  <div>Client player: {{state?.currentPlayer?.nickname}}</div>
-  <div>Time {{version?.turnClock}}</div>
-  <div>Player index: {{server.playerIndex}}</div>
-  <div>Current index: {{state?.currentplayerindex}}</div>
+  <div>time logged: {{state.timelogged | date: 'hh:mm:ss:sss'}}</div>
+  <div>game start: {{convertToDate(state.gamestart) | date: 'hh:mm:ss:sss'}}</div>
+  <div>turn start: {{convertToDate(state.turnstart) | date: 'hh:mm:ss:sss'}}</div>
+  <div>last updated: {{convertToDate(state.lastupdated) | date: 'hh:mm:ss:sss'}}</div>
+  <div>turn clock: {{state.turnclock}}</div>
+  <div>total turn time: {{state.totalturntime}}</div>
+
+  <div>game clock: {{state.gameclock}}</div>
+  <div>Current player: {{getCurrentPlayer(state).nickname}}</div>
 <!--  <div>{{lastchanges[stepNum] | json}}</div>-->
   <button mat-raised-button (click)="nextMove(false)">{{state.version}} Next Step</button>
   <button mat-raised-button (click)="nextMove(true)">{{state.version}} Prev Step</button>

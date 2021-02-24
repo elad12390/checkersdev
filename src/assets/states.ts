@@ -24,3 +24,9 @@ export const keysToLowerCase = (obj) => {
 };
 
 
+export const groupBy = (xs, key) => {
+  return Array.from(xs).reduce((rv, x) => {
+    (rv[x[key]] = rv[x[key]] || []).push(x);
+    return rv;
+  }, {});
+};
