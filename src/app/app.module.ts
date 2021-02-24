@@ -14,6 +14,7 @@ import { SquareComponent } from './board/square/square.component';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatSelectModule} from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
         MatButtonModule,
         MatTooltipModule,
         MatCheckboxModule,
+        MatSelectModule
     ],
   providers: [
     HttpClientModule,

@@ -5,7 +5,7 @@ import {filter, map, switchMap, tap, timeInterval} from 'rxjs/operators';
 import {MatCheckboxChange} from '@angular/material/checkbox';
 import {environment} from '../environments/environment';
 import {EMPTY, interval, Observable, of} from 'rxjs';
-import {keysToLowerCase} from '../assets/states';
+import {groupBy, keysToLowerCase} from '../assets/states';
 import {MatSnackBar} from '@angular/material/snack-bar';
 @Component({
   selector: 'app-root',
@@ -15,7 +15,9 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 export class AppComponent implements OnInit{
   private checked = true;
   public version: IVersion;
-  states: any;
+  statesByGroup: any;
+  public selectableGames: string[];
+  public selectedGame: any;
   constructor(public server: CheckersService, private snackBar: MatSnackBar) {
   }
   title = 'checkers-client';
@@ -25,6 +27,7 @@ export class AppComponent implements OnInit{
   playeridx = 1;
 
   localServerFormControl: FormControl = new FormControl(true);
+  selectGame: FormControl = new FormControl(null);
   logFile: FormControl = new FormControl('');
   public stepNum = 0;
 
@@ -38,6 +41,11 @@ export class AppComponent implements OnInit{
       tap(() => this.localServer(this.checked))
     ).subscribe();
 
+    this.selectGame.valueChanges.pipe(
+      tap((a) => this.selectedGame = a),
+      tap(a => this.refreshView())
+    ).subscribe();
+
     this.logFile.valueChanges.pipe(
       map(a => a.split('\n')),
       map(a => a.map(b => b.split(' | '))),
@@ -48,10 +56,18 @@ export class AppComponent implements OnInit{
         time: new Date(b[0]),
         state: keysToLowerCase(JSON.parse(b[4].split('state: ').join('')))
       }))),
-      map(arr => arr.filter((v, i, a) => a.findIndex(t => (t.state.version === v.state.version)) === i)),
-      tap(a => this.stepNum = 0),
-      tap(a => this.states = a.map(b => b.state)),
-      tap(a => this.refreshView()),
+      // map(arr => arr.filter((v, i, a) => a.findIndex(t => (t.state.version === v.state.version)) === i)),
+      map(arr => arr.map(b => {
+        const state = b.state;
+        b.time.setTime(b.time.getTime() + (2 * 60 * 60 * 1000));
+        state.timelogged = b.time;
+        return b.state;
+      })),
+      map(states => groupBy(states, 'id')),
+      tap(groupedStates => this.selectableGames = Object.keys(groupedStates)),
+      tap(() => this.stepNum = 0),
+      tap(a => this.statesByGroup = a),
+      tap(() => this.refreshView()),
       tap(a => console.log(a))
     ).subscribe();
   }
@@ -78,10 +94,10 @@ export class AppComponent implements OnInit{
   }
 
   public refreshViewObservable(): Observable<any> {
-    if (!this.states) {
+    if (!this.statesByGroup || !this.selectedGame) {
       return of([]);
     }
-    return of(this.states[this.stepNum]).pipe(
+    return of(this.statesByGroup[this.selectedGame][this.stepNum]).pipe(
       tap((res) => {
         this.state = res;
         const arr = [...new Array(14)].map(() => [...new Array(14)]);
@@ -144,8 +160,10 @@ export class AppComponent implements OnInit{
   }
 
   nextMove(rev): void {
-    if ((!rev && (this.stepNum + 1 >= this.states.length)) || (rev && (this.stepNum - 1 < 0))) {
-      if ((!rev && (this.stepNum + 1 >= this.states.length))) {
+    const selectedState = this.statesByGroup[this.selectedGame];
+    console.log(selectedState)
+    if ((!rev && (this.stepNum + 1 >= selectedState.length)) || (rev && (this.stepNum - 1 < 0))) {
+      if ((!rev && (this.stepNum + 1 >= selectedState.length))) {
         this.snackBar.open('Reached end', '', {duration: 1000});
       } else {
         this.snackBar.open('Reached start', '', {duration: 1000});
@@ -155,4 +173,13 @@ export class AppComponent implements OnInit{
     this.stepNum += rev ? -1 : 1;
     this.refreshView();
   }
+
+  public getCurrentPlayer(state): any {
+    return state?.players.find(a => Number(a.index) === Number(state.currentplayerindex));
+  }
+
+  convertToDate(timeA: any): Date {
+    return new Date(timeA);
+  }
+
 }
