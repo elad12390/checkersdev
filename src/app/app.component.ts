@@ -6,6 +6,7 @@ import {MatCheckboxChange} from '@angular/material/checkbox';
 import {environment} from '../environments/environment';
 import {EMPTY, interval, Observable, of} from 'rxjs';
 import {keysToLowerCase} from '../assets/states';
+import {MatSnackBar} from '@angular/material/snack-bar';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -15,7 +16,7 @@ export class AppComponent implements OnInit{
   private checked = true;
   public version: IVersion;
   states: any;
-  constructor(public server: CheckersService) {
+  constructor(public server: CheckersService, private snackBar: MatSnackBar) {
   }
   title = 'checkers-client';
   gameFormControl: FormControl = new FormControl('Game_Demo_1');
@@ -143,7 +144,12 @@ export class AppComponent implements OnInit{
   }
 
   nextMove(rev): void {
-    if ((!rev && (this.stepNum + 1 > this.states.length)) || (rev && (this.stepNum - 1 < 0))) {
+    if ((!rev && (this.stepNum + 1 >= this.states.length)) || (rev && (this.stepNum - 1 < 0))) {
+      if ((!rev && (this.stepNum + 1 >= this.states.length))) {
+        this.snackBar.open('Reached end', '', {duration: 1000});
+      } else {
+        this.snackBar.open('Reached start', '', {duration: 1000});
+      }
       return;
     }
     this.stepNum += rev ? -1 : 1;

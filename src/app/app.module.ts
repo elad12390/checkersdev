@@ -31,7 +31,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
         BrowserAnimationsModule,
         MatButtonModule,
         MatTooltipModule,
-        MatCheckboxModule
+        MatCheckboxModule,
     ],
   providers: [
     HttpClientModule,
