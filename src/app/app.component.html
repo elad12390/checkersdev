@@ -29,12 +29,6 @@
 <!--  <div>{{lastchanges[stepNum] | json}}</div>-->
   <button mat-raised-button (click)="nextMove(false)">{{state.version}} Next Step</button>
   <button mat-raised-button (click)="nextMove(true)">{{state.version}} Prev Step</button>
-  Playerid: {{state.laststatechange.playerid | json}}<br/>
-  chip: {{state.laststatechange.chipmoved?.chip | json}}<br/>
-  Old Position: {{state.laststatechange.chipmoved?.oldposition | json}}<br/>
-  NewPosition: {{state.laststatechange.chipmoved?.newposition | json}}<br/>
-  LastMove: {{state.laststatechange.chipmoved?.lastmove | json}}<br/>
-  removedChips: {{state.laststatechange.removedchips | json}}<br/>
   <app-board *ngIf="state" [board]="state.board.squares" (refresh)="playedMove()" [currentPlayerIndex]="state.currentPlayerIndex" [playerIndex]="playeridx"></app-board>
   <div class="game-details">
     <h2>Last state change:</h2>
