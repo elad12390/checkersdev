@@ -65,6 +65,7 @@ export class AppComponent implements OnInit{
       })),
       map(states => groupBy(states, 'id')),
       tap(groupedStates => this.selectableGames = Object.keys(groupedStates)),
+      tap(groupedStates => Object.keys(groupedStates).forEach(key => groupedStates[key] = groupedStates[key].filter((x, xi) => !groupedStates[key].slice(xi + 1).some(y => y['version'] === x['version'])))),
       tap(() => this.stepNum = 0),
       tap(a => this.statesByGroup = a),
       tap(() => this.refreshView()),

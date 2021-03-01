@@ -29,19 +29,19 @@
 <!--  <div>{{lastchanges[stepNum] | json}}</div>-->
   <button mat-raised-button (click)="nextMove(false)">{{state.version}} Next Step</button>
   <button mat-raised-button (click)="nextMove(true)">{{state.version}} Prev Step</button>
-  <app-board *ngIf="state" [board]="state.board.squares" (refresh)="playedMove()" [currentPlayerIndex]="state.currentPlayerIndex" [playerIndex]="playeridx"></app-board>
+  <app-board *ngIf="state" [board]="state.board?.squares" (refresh)="playedMove()" [currentPlayerIndex]="state.currentPlayerIndex" [playerIndex]="playeridx"></app-board>
   <div class="game-details">
     <h2>Last state change:</h2>
-    <div>Playerid: {{state.laststatechange.playerid | json}}</div>
-    <div>chip: <pre>{{state.laststatechange.chipmoved?.chip | json}}</pre></div>
-    <div>Old Position: [x: {{state.laststatechange.chipmoved?.oldposition.x}} , y: {{state.laststatechange.chipmoved?.oldposition.y}}]</div>
-    <div>New Position: [x: {{state.laststatechange.chipmoved?.newposition.x}} , y: {{state.laststatechange.chipmoved?.newposition.y}}]</div>
+    <div>Playerid: {{state.laststatechange?.playerid | json}}</div>
+    <div>chip: <pre>{{state.laststatechange?.chipmoved?.chip | json}}</pre></div>
+    <div>Old Position: [x: {{state.laststatechange.chipmoved?.oldposition?.x}} , y: {{state.laststatechange.chipmoved?.oldposition?.y}}]</div>
+    <div>New Position: [x: {{state.laststatechange.chipmoved?.newposition?.x}} , y: {{state.laststatechange.chipmoved?.newposition?.y}}]</div>
     <div>
       <h3>Last Move:</h3>
       <div class="last-move-list">
-        <div *ngIf="(state.laststatechange.chipmoved?.lastmove.length > 1) then moreThanOneMove; else oneMove"></div>
+        <div *ngIf="(state.laststatechange.chipmoved?.lastmove?.length > 1) then moreThanOneMove; else oneMove"></div>
         <h4>Removed chips:</h4>
-        <pre>{{state.laststatechange.removedchips | json}}</pre>
+        <pre>{{state.laststatechange?.removedchips | json}}</pre>
       </div>
     </div>
   </div>
@@ -55,5 +55,5 @@
   </div>
 </ng-template>
 <ng-template #oneMove>
-    <div> position: [x: {{state.laststatechange.chipmoved?.lastmove[0].x}} , y: {{state.laststatechange.chipmoved?.lastmove[0].y}}]</div>
+    <div> position: [x: {{state.laststatechange.chipmoved?.lastmove[0]?.x}} , y: {{state.laststatechange.chipmoved?.lastmove[0]?.y}}]</div>
 </ng-template>
