@@ -22,10 +22,8 @@
     </mat-form-field>
   </ng-container>
 <ng-container *ngIf="!!state">
-  <div>Client player: {{state?.currentPlayer?.nickname}}</div>
-  <div>Time {{version?.turnClock}}</div>
-  <div>Player index: {{server.playerIndex}}</div>
-  <div>Current index: {{state?.currentplayerindex}}</div>
+  <div>Time: {{state?.timelogged}}</div>
+  <div>Current Player index: {{state?.currentplayerindex}}</div>
 <!--  <div>{{lastchanges[stepNum] | json}}</div>-->
   <button mat-raised-button (click)="nextMove(false)">{{state.version}} Next Step</button>
   <button mat-raised-button (click)="nextMove(true)">{{state.version}} Prev Step</button>
